@@ -1,6 +1,7 @@
 'use client';
 
 import { ArrowDown, ArrowUp, ArrowUpDown, ChevronDown, MessageCircle, TrendingDown, TrendingUp, Users, X } from 'lucide-react';
+import { useEffect } from 'react';
 import { SortBy, SortOrder, StockData } from '../types';
 
 interface MobileTrendingStocksProps {
@@ -34,12 +35,31 @@ export default function MobileTrendingStocks({
   getSortedStocks,
   getSortLabel
 }: MobileTrendingStocksProps) {
-  if (!isOpen) return null;
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   return (
-    <div className="fixed inset-0 z-50 lg:hidden">
+    <div className={`fixed inset-0 z-50 lg:hidden transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+      }`}>
+      {/* Backdrop */}
+      <div
+        className={`absolute inset-0 bg-black/50 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'
+          }`}
+        onClick={onClose}
+      />
+
       {/* Full Screen Popup */}
-      <div className="absolute inset-0 bg-gray-800">
+      <div className={`absolute inset-0 bg-gray-800 transform transition-transform duration-300 ease-out ${isOpen ? 'translate-y-0' : 'translate-y-full'
+        }`}>
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-4 sm:p-6 border-b border-gray-700">
@@ -80,36 +100,33 @@ export default function MobileTrendingStocks({
                     )}
                   </button>
                 </div>
-                
+
                 {showSortMenu && (
                   <div className="absolute right-0 top-full mt-1 w-32 bg-gray-700 rounded-lg shadow-lg border border-gray-600 z-10">
                     <button
                       onClick={() => onSortChange('posts')}
-                      className={`w-full px-3 py-2 text-left text-sm rounded-t-lg transition-colors ${
-                        sortBy === 'posts' 
-                          ? 'bg-blue-600 text-white' 
-                          : 'text-gray-300 hover:bg-gray-600'
-                      }`}
+                      className={`w-full px-3 py-2 text-left text-sm rounded-t-lg transition-colors ${sortBy === 'posts'
+                        ? 'bg-blue-600 text-white'
+                        : 'text-gray-300 hover:bg-gray-600'
+                        }`}
                     >
                       Posts
                     </button>
                     <button
                       onClick={() => onSortChange('sentiment')}
-                      className={`w-full px-3 py-2 text-left text-sm transition-colors ${
-                        sortBy === 'sentiment' 
-                          ? 'bg-blue-600 text-white' 
-                          : 'text-gray-300 hover:bg-gray-600'
-                      }`}
+                      className={`w-full px-3 py-2 text-left text-sm transition-colors ${sortBy === 'sentiment'
+                        ? 'bg-blue-600 text-white'
+                        : 'text-gray-300 hover:bg-gray-600'
+                        }`}
                     >
                       Sentiment
                     </button>
                     <button
                       onClick={() => onSortChange('mentions')}
-                      className={`w-full px-3 py-2 text-left text-sm rounded-b-lg transition-colors ${
-                        sortBy === 'mentions' 
-                          ? 'bg-blue-600 text-white' 
-                          : 'text-gray-300 hover:bg-gray-600'
-                      }`}
+                      className={`w-full px-3 py-2 text-left text-sm rounded-b-lg transition-colors ${sortBy === 'mentions'
+                        ? 'bg-blue-600 text-white'
+                        : 'text-gray-300 hover:bg-gray-600'
+                        }`}
                     >
                       Mentions
                     </button>
@@ -118,7 +135,7 @@ export default function MobileTrendingStocks({
               </div>
             </div>
           </div>
-          
+
           {/* Stocks List */}
           <div className="flex-1 overflow-y-auto px-4 py-4 sm:p-6 space-y-3 sm:space-y-4">
             {getSortedStocks().map((stock) => (
@@ -128,11 +145,10 @@ export default function MobileTrendingStocks({
                   onStockSelect(stock);
                   onClose();
                 }}
-                className={`p-4 sm:p-5 rounded-lg cursor-pointer transition-colors ${
-                  selectedStock?.symbol === stock.symbol
-                    ? 'bg-blue-600'
-                    : 'bg-gray-700 hover:bg-gray-600'
-                }`}
+                className={`p-4 sm:p-5 rounded-lg cursor-pointer transition-colors ${selectedStock?.symbol === stock.symbol
+                  ? 'bg-blue-600'
+                  : 'bg-gray-700 hover:bg-gray-600'
+                  }`}
               >
                 <div className="flex items-center justify-between mb-2 sm:mb-3">
                   <span className="font-bold text-lg sm:text-xl">${stock.symbol}</span>
@@ -142,14 +158,13 @@ export default function MobileTrendingStocks({
                     ) : (
                       <TrendingDown className="w-4 h-4 text-red-400" />
                     )}
-                    <span className={`ml-1 text-sm sm:text-base ${
-                      stock.sentimentScore > 0 ? 'text-green-400' : 'text-red-400'
-                    }`}>
+                    <span className={`ml-1 text-sm sm:text-base ${stock.sentimentScore > 0 ? 'text-green-400' : 'text-red-400'
+                      }`}>
                       {stock.sentimentScore > 0 ? '+' : ''}{stock.sentimentScore.toFixed(2)}
                     </span>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center justify-between text-sm sm:text-base text-gray-300">
                   <span className="flex items-center">
                     <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />

@@ -50,14 +50,13 @@ export default function StockDetails({
 
   return (
     <div className="col-span-1 lg:col-span-2 flex">
-      <div className="bg-gray-800 rounded-lg p-6 w-full flex flex-col">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold">${selectedStock.symbol}</h2>
+      <div className="bg-gray-800 rounded-lg p-4 sm:p-6 w-full flex flex-col">
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold">${selectedStock.symbol}</h2>
           <div className="text-right">
-            <div className="text-sm text-gray-400">Sentiment Score</div>
-            <div className={`text-xl font-bold ${
-              selectedStock.sentimentScore > 0 ? 'text-green-400' : 'text-red-400'
-            }`}>
+            <div className="text-xs sm:text-sm text-gray-400">Sentiment Score</div>
+            <div className={`text-lg sm:text-xl font-bold ${selectedStock.sentimentScore > 0 ? 'text-green-400' : 'text-red-400'
+              }`}>
               {selectedStock.sentimentScore > 0 ? '+' : ''}{selectedStock.sentimentScore.toFixed(2)}
             </div>
           </div>
@@ -68,21 +67,21 @@ export default function StockDetails({
           {priceLoading ? (
             <PriceDisplaySkeleton />
           ) : (
-            <div className="bg-gray-700 rounded-lg p-4">
+            <div className="bg-gray-700 rounded-lg p-3 sm:p-4">
               <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-sm text-gray-400">Current Price</div>
-                  <div className="text-2xl font-bold text-white flex items-center">
+                <div className="min-w-0 flex-1">
+                  <div className="text-xs sm:text-sm text-gray-400">Current Price</div>
+                  <div className="text-xl sm:text-2xl font-bold text-white flex items-center truncate">
                     {stockPrice ? (
-                      stockPrice.price === 'N/A' ? 'Price N/A' : 
-                      stockPrice.price === 'Error' ? 'Price Error' : 
-                      `$${stockPrice.price}`
+                      stockPrice.price === 'N/A' ? 'Price N/A' :
+                        stockPrice.price === 'Error' ? 'Price Error' :
+                          `$${stockPrice.price}`
                     ) : (
                       'Loading...'
                     )}
                   </div>
                   {stockPrice && stockPrice.change !== 'N/A' && stockPrice.change !== 'Error' && (
-                    <div className={`text-sm ${parseFloat(stockPrice.change) >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                    <div className={`text-xs sm:text-sm ${parseFloat(stockPrice.change) >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                       {parseFloat(stockPrice.change) >= 0 ? '+' : ''}{stockPrice.change} ({stockPrice.changePercent}%)
                     </div>
                   )}
@@ -93,87 +92,84 @@ export default function StockDetails({
         </div>
 
         {/* Stock Price Chart */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold">Price Chart</h3>
-            <div className="flex space-x-2">
-              <button 
+        <div className="mb-4 sm:mb-6">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <h3 className="text-base sm:text-lg font-semibold">Price Chart</h3>
+            <div className="flex space-x-1 sm:space-x-2">
+              <button
                 onClick={() => onChartTypeChange('area')}
-                className={`px-3 py-1 text-xs rounded ${
-                  chartType === 'area' 
-                    ? 'bg-blue-600 text-white' 
+                className={`px-2 sm:px-3 py-1 text-xs rounded ${chartType === 'area'
+                    ? 'bg-blue-600 text-white'
                     : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
-                }`}
+                  }`}
               >
                 Area
               </button>
-              <button 
+              <button
                 onClick={() => onChartTypeChange('candles')}
-                className={`px-3 py-1 text-xs rounded ${
-                  chartType === 'candles' 
-                    ? 'bg-blue-600 text-white' 
+                className={`px-2 sm:px-3 py-1 text-xs rounded ${chartType === 'candles'
+                    ? 'bg-blue-600 text-white'
                     : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
-                }`}
+                  }`}
               >
                 Candles
               </button>
             </div>
           </div>
-          <div className="bg-gray-700 rounded-lg p-4">
-            <div 
+          <div className="bg-gray-700 rounded-lg p-2 sm:p-4 overflow-hidden">
+            <div
               id={`tradingview_${selectedStock.symbol}`}
-              className="w-full h-96"
+              className="w-full h-64 sm:h-80 md:h-96 max-h-[400px] sm:max-h-[500px] md:max-h-[600px] overflow-hidden"
+              style={{ minHeight: 0 }}
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          <div className="bg-gray-700 rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-blue-400">{selectedStock.uniquePosts}</div>
-            <div className="text-sm text-gray-400">Unique Posts</div>
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6">
+          <div className="bg-gray-700 rounded-lg p-3 sm:p-4 text-center">
+            <div className="text-xl sm:text-2xl font-bold text-blue-400">{selectedStock.uniquePosts}</div>
+            <div className="text-xs sm:text-sm text-gray-400">Unique Posts</div>
           </div>
-          <div className="bg-gray-700 rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-green-400">{selectedStock.positiveMentions}</div>
-            <div className="text-sm text-gray-400">Bullish</div>
+          <div className="bg-gray-700 rounded-lg p-3 sm:p-4 text-center">
+            <div className="text-xl sm:text-2xl font-bold text-green-400">{selectedStock.positiveMentions}</div>
+            <div className="text-xs sm:text-sm text-gray-400">Bullish</div>
           </div>
-          <div className="bg-gray-700 rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-red-400">{selectedStock.negativeMentions}</div>
-            <div className="text-sm text-gray-400">Bearish</div>
+          <div className="bg-gray-700 rounded-lg p-3 sm:p-4 text-center">
+            <div className="text-xl sm:text-2xl font-bold text-red-400">{selectedStock.negativeMentions}</div>
+            <div className="text-xs sm:text-sm text-gray-400">Bearish</div>
           </div>
         </div>
 
-        <div className="flex flex-col">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold">Recent Discussions</h3>
-            <div className="flex items-center space-x-2">
+        <div className="flex flex-col flex-1 min-h-0">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <h3 className="text-base sm:text-lg font-semibold">Recent Discussions</h3>
+            <div className="flex items-center space-x-1 sm:space-x-2">
               <div className="relative">
                 <button
                   onClick={onDiscussionSortMenuToggle}
-                  className="flex items-center space-x-1 px-3 py-1 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 transition-colors text-sm"
+                  className="flex items-center space-x-1 px-2 sm:px-3 py-1 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 transition-colors text-xs sm:text-sm"
                 >
-                  <ArrowUpDown className="w-4 h-4" />
-                  <span>{getDiscussionSortLabel()}</span>
-                  <ChevronDown className="w-3 h-3" />
+                  <ArrowUpDown className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">{getDiscussionSortLabel()}</span>
+                  <ChevronDown className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                 </button>
                 {showDiscussionSortMenu && (
                   <div className="absolute right-0 top-full mt-1 w-32 bg-gray-700 rounded-lg shadow-lg border border-gray-600 z-10">
                     <button
                       onClick={() => onDiscussionSortChange('date')}
-                      className={`w-full px-3 py-2 text-left text-sm rounded-t-lg transition-colors ${
-                        discussionSortBy === 'date' 
-                          ? 'bg-blue-600 text-white' 
+                      className={`w-full px-3 py-2 text-left text-sm rounded-t-lg transition-colors ${discussionSortBy === 'date'
+                          ? 'bg-blue-600 text-white'
                           : 'text-gray-300 hover:bg-gray-600'
-                      }`}
+                        }`}
                     >
                       Date
                     </button>
                     <button
                       onClick={() => onDiscussionSortChange('upvotes')}
-                      className={`w-full px-3 py-2 text-left text-sm rounded-b-lg transition-colors ${
-                        discussionSortBy === 'upvotes' 
-                          ? 'bg-blue-600 text-white' 
+                      className={`w-full px-3 py-2 text-left text-sm rounded-b-lg transition-colors ${discussionSortBy === 'upvotes'
+                          ? 'bg-blue-600 text-white'
                           : 'text-gray-300 hover:bg-gray-600'
-                      }`}
+                        }`}
                     >
                       Upvotes
                     </button>
@@ -193,7 +189,7 @@ export default function StockDetails({
               </button>
             </div>
           </div>
-          <div className="space-y-3 overflow-y-auto pr-2" style={{ height: '1200px' }}>
+          <div className="space-y-3 overflow-y-auto pr-2 max-h-[400px] sm:max-h-[500px] md:max-h-[600px] lg:max-h-[800px] xl:max-h-[1200px]">
             {getSortedDiscussions().length === 0 ? (
               // Show skeleton loaders when no discussions
               Array.from({ length: 5 }).map((_, index) => (
@@ -201,8 +197,8 @@ export default function StockDetails({
               ))
             ) : (
               getSortedDiscussions().map((post, index) => (
-                <a 
-                  key={index} 
+                <a
+                  key={index}
                   href={`https://www.reddit.com${post.permalink}`}
                   target="_blank"
                   rel="noopener noreferrer"
