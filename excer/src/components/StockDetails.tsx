@@ -99,8 +99,8 @@ export default function StockDetails({
               <button
                 onClick={() => onChartTypeChange('area')}
                 className={`px-2 sm:px-3 py-1 text-xs rounded ${chartType === 'area'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
                   }`}
               >
                 Area
@@ -108,8 +108,8 @@ export default function StockDetails({
               <button
                 onClick={() => onChartTypeChange('candles')}
                 className={`px-2 sm:px-3 py-1 text-xs rounded ${chartType === 'candles'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
                   }`}
               >
                 Candles
@@ -158,8 +158,8 @@ export default function StockDetails({
                     <button
                       onClick={() => onDiscussionSortChange('date')}
                       className={`w-full px-3 py-2 text-left text-sm rounded-t-lg transition-colors ${discussionSortBy === 'date'
-                          ? 'bg-blue-600 text-white'
-                          : 'text-gray-300 hover:bg-gray-600'
+                        ? 'bg-blue-600 text-white'
+                        : 'text-gray-300 hover:bg-gray-600'
                         }`}
                     >
                       Date
@@ -167,8 +167,8 @@ export default function StockDetails({
                     <button
                       onClick={() => onDiscussionSortChange('upvotes')}
                       className={`w-full px-3 py-2 text-left text-sm rounded-b-lg transition-colors ${discussionSortBy === 'upvotes'
-                          ? 'bg-blue-600 text-white'
-                          : 'text-gray-300 hover:bg-gray-600'
+                        ? 'bg-blue-600 text-white'
+                        : 'text-gray-300 hover:bg-gray-600'
                         }`}
                     >
                       Upvotes
@@ -179,12 +179,12 @@ export default function StockDetails({
               <button
                 onClick={onDiscussionSortOrderToggle}
                 className="p-1 rounded bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors"
-                title={discussionSortOrder === 'desc' ? 'Most to least' : 'Least to most'}
+                title={discussionSortOrder === 'desc' ? 'Newest to oldest' : 'Oldest to newest'}
               >
                 {discussionSortOrder === 'desc' ? (
-                  <ArrowDown className="w-4 h-4" />
-                ) : (
                   <ArrowUp className="w-4 h-4" />
+                ) : (
+                  <ArrowDown className="w-4 h-4" />
                 )}
               </button>
             </div>

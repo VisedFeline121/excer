@@ -600,7 +600,9 @@ export default function Home() {
           bValue = b.created_utc;
       }
 
-      return discussionSortOrder === 'desc' ? aValue - bValue : bValue - aValue;
+      // For 'desc': newest/highest first (bValue - aValue for descending)
+      // For 'asc': oldest/lowest first (aValue - bValue for ascending)
+      return discussionSortOrder === 'desc' ? bValue - aValue : aValue - bValue;
     });
 
     return sorted;
