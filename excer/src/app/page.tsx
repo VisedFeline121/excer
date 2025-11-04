@@ -4,6 +4,7 @@ import { Menu } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ErrorBoundary from '../components/ErrorBoundary';
 import ErrorDisplay from '../components/ErrorDisplay';
+import FeedbackButton from '../components/FeedbackButton';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import LoadingScreen from '../components/LoadingScreen';
@@ -720,6 +721,7 @@ export default function Home() {
         />
 
         <Footer />
+        <FeedbackButton />
       </div>
     </ErrorBoundary>
   );
