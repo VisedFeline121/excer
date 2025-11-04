@@ -11,6 +11,7 @@ import LoadingScreen from '../components/LoadingScreen';
 import MobileTrendingStocks from '../components/MobileTrendingStocks';
 import StockDetails from '../components/StockDetails';
 import TrendingStocks from '../components/TrendingStocks';
+import WhatIsExcerButton from '../components/WhatIsExcerButton';
 import { isAPIError, isNetworkError, useErrorHandler } from '../hooks/useErrorHandler';
 import { ChartType, DiscussionSortBy, SortBy, SortOrder, StockData, StockPrice } from '../types';
 
@@ -721,6 +722,7 @@ export default function Home() {
         />
 
         <Footer />
+        <WhatIsExcerButton />
         <FeedbackButton />
       </div>
     </ErrorBoundary>
