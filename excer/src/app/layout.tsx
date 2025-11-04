@@ -1,6 +1,7 @@
 import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from 'next/script';
 import "./globals.css";
 
 
@@ -35,8 +36,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <Script src="https://tally.so/widgets/embed.js" strategy="afterInteractive" />
+        <GoogleAnalytics gaId="G-7GXWQ55M8H" />
       </body>
-      <GoogleAnalytics gaId="G-7GXWQ55M8H" />
     </html>
   );
 }
