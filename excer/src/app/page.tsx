@@ -465,42 +465,40 @@ export default function Home() {
 
     if (isMarketOpen) {
       // Market is open, show time until close (4:00 PM ET)
-      const targetUTC = new Date(Date.UTC(
-        nyDate.year,
-        nyDate.month - 1,
-        nyDate.day,
-        20, // 4:00 PM ET = 20:00 UTC (during EDT)
-        0
-      ));
+      // Calculate milliseconds until 4 PM ET today
+      const targetTime = Date.now() + 
+        ((16 - nyDate.hour) * 3600000) + 
+        ((0 - nyDate.minute) * 60000) + 
+        ((0 - nyDate.second) * 1000);
 
-      return { time: targetUTC.getTime(), isOpening: false };
+      return { time: targetTime, isOpening: false };
     } else {
       // Market is closed, show time until next open (9:30 AM ET)
-      const targetYear = nyDate.year;
-      const targetMonth = nyDate.month;
       let targetDay = nyDate.day;
 
-      // If we're past 4:00 PM today or it's weekend, move to next trading day
-      if (nyDate.hour >= 16 || !isWeekday) {
+      // If we're past 9:30 AM today or it's not a weekday, move to next day
+      const isPast930 = nyDate.hour > 9 || (nyDate.hour === 9 && nyDate.minute >= 30);
+      if (isPast930 || !isWeekday) {
         targetDay += 1;
       }
 
       // Skip weekends - if target is weekend, move to Monday
-      const targetDate = new Date(targetYear, targetMonth - 1, targetDay);
+      let targetDate = new Date(nyDate.year, nyDate.month - 1, targetDay);
       while (targetDate.getDay() === 0 || targetDate.getDay() === 6) {
         targetDate.setDate(targetDate.getDate() + 1);
       }
+      
+      // Calculate days difference
+      const currentDateOnly = new Date(nyDate.year, nyDate.month - 1, nyDate.day);
+      const daysDiff = Math.round((targetDate.getTime() - currentDateOnly.getTime()) / (24 * 3600000));
+      
+      // Calculate time to 9:30 AM on target day in milliseconds
+      const hoursFromNow = (daysDiff * 24) + (9 - nyDate.hour);
+      const minutesFromNow = (hoursFromNow * 60) + (30 - nyDate.minute);
+      const secondsFromNow = (minutesFromNow * 60) + (0 - nyDate.second);
+      const targetTime = Date.now() + (secondsFromNow * 1000);
 
-      // Create a UTC date string for 9:30 AM on the target date
-      const targetUTC = new Date(Date.UTC(
-        targetDate.getFullYear(),
-        targetDate.getMonth(),
-        targetDate.getDate(),
-        13, // 9:30 AM ET = 13:30 UTC (during EDT)
-        30
-      ));
-
-      return { time: targetUTC.getTime(), isOpening: true };
+      return { time: targetTime, isOpening: true };
     }
   };
 

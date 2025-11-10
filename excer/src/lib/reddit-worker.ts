@@ -374,7 +374,7 @@ class RedditWorker {
             'COLOR', 'RED', 'BLUE', 'GREEN', 'YELLOW', 'BLACK', 'WHITE',
             'NUMBER', 'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN',
             // Common Abbreviations
-            'USA', 'UK', 'EU', 'UN', 'NATO', 'WHO', 'UNESCO', 'NASA', 'FBI', 'CIA',
+            'USA', 'UK', 'EU', 'UN', 'NATO', 'WHO', 'UNESCO', 'NASA', 'FBI', 'CIA', 'MOON',
             'TV', 'PC', 'CD', 'DVD', 'USB', 'GPS', 'WiFi', 'HTML', 'CSS', 'JS',
             'AM', 'PM', 'AD', 'BC', 'ETC', 'EG', 'IE', 'VS', 'AKA', 'FYI',
             // Common Acronyms
